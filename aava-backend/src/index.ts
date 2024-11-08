@@ -2,6 +2,7 @@ import express from 'express';
 import { PORT } from './utils/config';
 import { connectToDatabase } from './utils/database';
 import applicantRouter from './routers/applicantRouter';
+import { Applicant, JobExperience } from './models';
 
 const app = express();
 
