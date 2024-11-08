@@ -1,7 +1,7 @@
 import express from 'express';
 import { PORT } from './utils/config';
 import { connectToDatabase } from './utils/database';
-import applicantRouter from './routes/applicantRouter';
+import applicantRouter from './routers/applicantRouter';
 
 const app = express();
 
@@ -20,5 +20,3 @@ const start = async () => {
 }
 
 start();
-
-
