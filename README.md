@@ -9,6 +9,7 @@ Aava Backend is a Node.js application built with TypeScript. It provides a backe
 1. Clone the repository:
     ```sh
     git clone <repository-url>
+    cd aava-backend
     ```
 
 2. Install dependencies:
