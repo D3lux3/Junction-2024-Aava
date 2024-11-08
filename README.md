@@ -17,8 +17,12 @@ Aava Backend is a Node.js application built with TypeScript. It provides a backe
     npm install
     ```
 
-3. Create a `.env` file in the root directory and add your environment variables.
+3. In project root run command `docker-compose up db -d`
 
+4. Create a `.env` file in the `aava-backend` directory and add your environment variables.
+```
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+```
 ## Scripts
 
 - `tsc`: Compiles the TypeScript code.
