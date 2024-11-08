@@ -1,6 +1,5 @@
 import { DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
-import JobExperience from "./JobExperience";
 
 class Applicant extends Model<InferAttributes<Applicant>, InferCreationAttributes<Applicant>> {
     declare id: string;
@@ -8,7 +7,6 @@ class Applicant extends Model<InferAttributes<Applicant>, InferCreationAttribute
     declare lastName: string;
     declare email: string;
     declare bio: string;
-    declare jobExperienceReference: ForeignKey<JobExperience['id']>;
 }
 
 Applicant.init({

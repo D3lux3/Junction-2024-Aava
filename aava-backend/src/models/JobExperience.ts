@@ -1,12 +1,14 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, ForeignKey } from "sequelize";
 import { sequelize } from "../utils/database";
+import Applicant from "./Applicant";
 
 class JobExperience extends Model<InferAttributes<JobExperience>, InferCreationAttributes<JobExperience>> {
     declare id: string;
     declare companyName: string;
     declare field: string;
-    declare startDate: Date;
-    declare endDate: Date;
+    declare startDate: number;
+    declare endDate: number;
+    declare applicantId: ForeignKey<Applicant['id']>;
 }
 
 JobExperience.init({
@@ -25,11 +27,11 @@ JobExperience.init({
         allowNull: false
     },
     startDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     endDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
