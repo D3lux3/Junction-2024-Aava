@@ -9,8 +9,9 @@ const ProfileCreation: React.FC = () => {
     console.log(`${type} card clicked`);
     if (type === 'Looking for a job') {
       navigate('/surveyfreshprofile');
+    } else if (type === 'Offering a job') {
+      navigate('/company-form');
     }
-    // Add navigation or other logic here
   };
 
   return (
