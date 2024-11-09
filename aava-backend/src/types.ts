@@ -1,4 +1,4 @@
-import { string, number, object } from 'yup';
+import { string, number, object, array } from 'yup';
 
 export const applicantSchema = object({
     firstName: string().required(),
@@ -47,6 +47,27 @@ export const employeeSchema = object({
     email: string().email().required(),
     companyId: string().required()
 });
+
+
+export const surveyAnswerSchema = object({
+    wbName: string().required(),
+    answerValue: number().required(),
+});
+
+export const arrayOfSurveyAnswerSchema = array(surveyAnswerSchema);
+
+export const surveyAnswerRequestSchema = object({
+    companyId: string().required(),
+    employeeId: string().required(),
+    surveyAnswers: array(surveyAnswerSchema)
+});
+
+export interface SurveyAnswer {
+    wbName: string;
+    answerValue: number;
+    employeeId: string;
+    companyId: string;
+}
 
 export interface Company {
     companyName: string;
