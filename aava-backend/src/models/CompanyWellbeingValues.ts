@@ -26,8 +26,8 @@ CompanyWellbeingValues.init({
     }
 }, {
     sequelize,
-    modelName: 'companyWellbeingValue',
-    tableName: 'companyWellbeingValues',
+    modelName: 'companywellbeingvalue',
+    tableName: 'companywellbeingvalues',
     underscored: true,
     timestamps: false
 })

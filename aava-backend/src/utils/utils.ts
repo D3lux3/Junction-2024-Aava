@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const populateDatabase = async () => {
     try {
       const applicant = await Applicant.create({
-        id: uuidv4(),
+        id: "123",
         firstName: "John",
         lastName: "Doe",
         email: "john.doe@example.com",
@@ -30,10 +30,18 @@ export const populateDatabase = async () => {
   
       await ApplicantWellbeingValue.create({
         id: uuidv4(),
-        name: "Sample Wellbeing",
+        name: "Work-Life Balance",
         weight: 1.5,
         applicantId: applicant.id
       });
+
+      await ApplicantWellbeingValue.create({
+        id: uuidv4(),
+        name: "Workplace Safety",
+        weight: 2,
+        applicantId: applicant.id
+      });
+  
   
       const company = await Company.create({
         id: uuidv4(),

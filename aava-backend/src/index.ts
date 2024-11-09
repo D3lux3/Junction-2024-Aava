@@ -3,7 +3,7 @@ import { PORT } from './utils/config';
 import { connectToDatabase } from './utils/database';
 import applicantRouter from './routers/applicantRouter';
 import companyRouter from './routers/companyRouter';
-import { populateDatabase } from './utils/utils';
+import { getCompanyDistances } from './db';
 
 const app = express();
 
@@ -11,7 +11,8 @@ app.use(express.json());
 app.use('/applicants', applicantRouter)
 app.use('/companies', companyRouter)
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    console.log(await getCompanyDistances("123"));
     res.send('Hello World!');
 })
 

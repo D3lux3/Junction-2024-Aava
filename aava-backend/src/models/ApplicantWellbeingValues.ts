@@ -26,8 +26,8 @@ ApplicantWellbeingValue.init({
     }
 }, {
     sequelize,
-    modelName: 'applicantWellbeingValue',
-    tableName: 'applicantWellbeingValues',
+    modelName: 'applicantwellbeingvalue',
+    tableName: 'applicantwellbeingvalues',
     underscored: true,
     timestamps: false
 })
