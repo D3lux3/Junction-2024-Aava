@@ -1,4 +1,4 @@
-import { DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "../utils/database";
 
 class Applicant extends Model<InferAttributes<Applicant>, InferCreationAttributes<Applicant>> {

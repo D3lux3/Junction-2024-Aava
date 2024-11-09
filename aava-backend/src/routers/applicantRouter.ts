@@ -1,6 +1,6 @@
 import express from 'express';
-import { Applicant, Education, JobExperience } from '../models';
-import { applicantSchema, EducationSchema, jobExperienceSchema } from '../types';
+import { Applicant, Education, JobExperience, ApplicantWellbeingValue } from '../models';
+import { applicantSchema, applicantWellbeingValueSchema, educationSchema, jobExperienceSchema } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const applicants = await Applicant.findAll({
-      include: [JobExperience, Education]
+      include: [JobExperience, Education, ApplicantWellbeingValue]
     });
     res.json(applicants);
   } catch (error) {
@@ -90,11 +90,29 @@ router.post('/education/:id', async (req, res) => {
       return;
     }
 
-    const validatedRequestBody = await EducationSchema.validate({ ...req.body, applicantId: applicant.id });
+    const validatedRequestBody = await educationSchema.validate({ ...req.body, applicantId: applicant.id });
 
-    const EducationWithId = { ...validatedRequestBody, id: uuidv4() };
-    const education = await Education.create(EducationWithId);
+    const educationWithId = { ...validatedRequestBody, id: uuidv4() };
+    const education = await Education.create(educationWithId);
     res.status(201).json(education);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+router.post('/wellbeing/:id', async (req, res) => {
+  try {
+    const applicant = await Applicant.findByPk(req.params.id);
+
+    if (!applicant) {
+      res.status(404).json({ error: 'Applicant not found' });
+      return;
+    }
+
+    const validatedRequestBody = await applicantWellbeingValueSchema.validate({ ...req.body, applicantId: applicant.id });
+    const applicantWellBeingWithId = { ...validatedRequestBody, id: uuidv4() };
+    const applicantWellBeing = await ApplicantWellbeingValue.create(applicantWellBeingWithId);
+    res.status(201).json(applicantWellBeing);
   } catch (error) {
     res.status(500).json({ error: error });
   }
