@@ -74,6 +74,10 @@ export interface JobListing {
     companyId: string;
 }
 
+export interface JobListingWithId extends JobListing {
+    id: string;
+}
+
 export interface SurveyAnswer {
     wbName: string;
     answerValue: number;

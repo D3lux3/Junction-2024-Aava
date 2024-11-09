@@ -1,13 +1,13 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { Company, CompanyWellbeingValues, Employee, SurveyAnswer } from '../models/';
-import { surveyAnswerRequestSchema, companySchema, companyWellbeingValueSchema, employeeSchema, arrayOfSurveyAnswerSchema } from '../types';
+import { Company, CompanyWellbeingValues, Employee, SurveyAnswer, JobListing } from '../models/';
+import { surveyAnswerRequestSchema, companySchema, companyWellbeingValueSchema, employeeSchema, arrayOfSurveyAnswerSchema, jobListingSchema } from '../types';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
     const companies = await Company.findAll({
-      include: [CompanyWellbeingValues, Employee, SurveyAnswer]
+      include: [CompanyWellbeingValues, Employee, SurveyAnswer, JobListing]
     });
     res.json(companies);
   } catch (error) {
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const company = await Company.findByPk(req.params.id, {
-      include: [CompanyWellbeingValues, Employee, SurveyAnswer]
+      include: [CompanyWellbeingValues, Employee, SurveyAnswer, JobListing]
     });
     res.json(company);
   } catch (error) {
@@ -131,5 +131,23 @@ router.post('/:id/employee/:employeeid', async (req, res) => {
     res.status(500).json({ error: error });
   }
 });
+
+router.post('/joblisting/:id', async (req, res) => {
+    try {
+      const company = await Company.findByPk(req.params.id);
+  
+      if (!company) {
+        res.status(404).json({ error: 'Company not found' });
+        return;
+      }
+  
+      const validatedRequestBody = await jobListingSchema.validate({ ...req.body, companyId: company.id });
+      const jobListingWithId = { ...validatedRequestBody, id: uuidv4() };
+      const savedListing = await JobListing.create(jobListingWithId);
+      res.status(201).json(savedListing);
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  });
 
 export default router;

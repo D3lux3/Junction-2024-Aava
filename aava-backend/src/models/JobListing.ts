@@ -1,15 +1,15 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, ForeignKey } from "sequelize";
 import { sequelize } from "../utils/database";
-import { Company } from "./";
+import { Company } from ".";
 
-class JobListings extends Model<InferAttributes<JobListings>, InferCreationAttributes<JobListings>> {
+class JobListing extends Model<InferAttributes<JobListing>, InferCreationAttributes<JobListing>> {
     declare id: string;
     declare jobName: string;
     declare jobDescription: string;
     declare companyId: ForeignKey<Company['id']>;
 }
 
-JobListings.init({
+JobListing.init({
     id: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -32,4 +32,4 @@ JobListings.init({
     timestamps: false
 })
 
-export default JobListings;
+export default JobListing;
