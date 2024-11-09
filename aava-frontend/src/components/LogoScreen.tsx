@@ -1,5 +1,5 @@
 import React from 'react';
-import jobberLogo from '../assets/jobberlogo.svg'; // Ensure this path is correct
+import jobberLogo from '../assets/jobberlogo.svg';
 
 const LogoScreen: React.FC = () => {
   return (

@@ -1,12 +1,12 @@
 import React from 'react';
-import jobberLogo from '../assets/jobberlogo.svg'; // Ensure this path is correct
+import jobberLogo from '../assets/jobberlogo.svg';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    navigate('/next-page'); // Replace with your actual next page route
+    navigate('/Walkthrough');
   };
 
   return (
