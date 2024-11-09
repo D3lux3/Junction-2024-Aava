@@ -1,13 +1,13 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { Company, CompanyWellbeingValues, Employee } from '../models/';
-import { companySchema, companyWellbeingValueSchema, employeeSchema } from '../types';
+import { Company, CompanyWellbeingValues, Employee, SurveyAnswer } from '../models/';
+import { surveyAnswerRequestSchema, companySchema, companyWellbeingValueSchema, employeeSchema, arrayOfSurveyAnswerSchema } from '../types';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
     const companies = await Company.findAll({
-      include: [CompanyWellbeingValues, Employee]
+      include: [CompanyWellbeingValues, Employee, SurveyAnswer]
     });
     res.json(companies);
   } catch (error) {
@@ -57,6 +57,15 @@ router.post('/wellbeing/:id', async (req, res) => {
   }
 });
 
+/**
+ * POST /companies/:id/employee
+ * Creates a new employee for a company.
+ * Example request body:
+ * 
+ {
+  "email": "employee@example.com"
+ }
+ */
 router.post('/employee/:id', async (req, res) => {
   try {
     const company = await Company.findByPk(req.params.id);
@@ -70,6 +79,39 @@ router.post('/employee/:id', async (req, res) => {
     const employeeWithId = { ...validatedRequestBody, id: uuidv4() };
     const savedEmployee = await Employee.create(employeeWithId);
     res.status(201).json(savedEmployee);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+/**
+ * POST /companies/:id/employee/:employeeid
+ * Takes in a ARRAY of survey answers for an employee of a company.
+ * POST to this endpoint in when the survey ends.
+ */
+router.post('/:id/employee/:employeeid', async (req, res) => {
+  try {
+    const company = await Company.findByPk(req.params.id);
+    const employee = await Employee.findByPk(req.params.employeeid);
+
+    if (!company) {
+      res.status(404).json({ error: 'Company not found' });
+      return;
+    }
+
+    if (!employee) {
+      res.status(404).json({ error: 'Employee not found' });
+      return;
+    }
+
+    const validatedRequestBody = await arrayOfSurveyAnswerSchema.validate(req.body);
+    if (!validatedRequestBody) {
+      res.status(400).json({ error: 'Invalid request body' });
+      return;
+    }
+    const surveyAnswersToCreate = validatedRequestBody.map((surveyAnswer) => ({ ...surveyAnswer, id: uuidv4(), companyId: company.id, employeeId: employee.id }));
+    const savedSurveyAnswers = await SurveyAnswer.bulkCreate(surveyAnswersToCreate);
+    res.status(201).json(savedSurveyAnswers);
   } catch (error) {
     res.status(500).json({ error: error });
   }
