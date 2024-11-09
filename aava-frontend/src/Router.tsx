@@ -7,6 +7,7 @@ import ProfileCreation from './components/ProfileCreation';
 import SurveyView2 from './components/SurveyView2';
 import CompanyForm from './components/CompanyCreation';
 import DemoInfo from './components/DemoInfo';
+import CompanyCardView from './components/CompanyCardView';
 
 const surveyTitles = ['Work-Life Balance',
   'Mental Health Support',
@@ -97,6 +98,7 @@ const AppRouter: React.FC = () => {
         <Route path="/surveyfreshprofile" element={<SurveyView2 titles={surveyTitles} questions={surveyQuestions} onFinish={handleFinish} />} />
         <Route path="/company-form" element={<CompanyForm />} />
         <Route path="/demo-info" element={<DemoInfo />} />
+        <Route path="/companycardview" element={<CompanyCardView />} />
       </Routes>
     </Router>
   );
