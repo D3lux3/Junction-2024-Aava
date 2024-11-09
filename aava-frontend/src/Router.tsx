@@ -8,7 +8,7 @@ const AppRouter: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/next-page" element={<Walkthrough />} />
+        <Route path="/Walkth" element={<Walkthrough />} />
       </Routes>
     </Router>
   );

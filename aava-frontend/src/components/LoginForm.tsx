@@ -6,7 +6,7 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    navigate('/Walkthrough');
+    navigate('/Walkth');
   };
 
   return (
