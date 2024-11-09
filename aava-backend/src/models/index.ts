@@ -4,14 +4,18 @@ import { sequelize } from '../utils/database';
 import Education from "./Education";
 import Company from "./Company";
 import ApplicantWellbeingValue from "./ApplicantWellbeingValues";
+import CompanyWellbeingValues from "./CompanyWellbeingValues";
 
 Applicant.hasMany(JobExperience);
 Applicant.hasOne(Education);
 Applicant.hasMany(ApplicantWellbeingValue);
 
+Company.hasMany(CompanyWellbeingValues);
+
 JobExperience.belongsTo(Applicant);
 Education.belongsTo(Applicant);
 ApplicantWellbeingValue.belongsTo(Applicant);
+CompanyWellbeingValues.belongsTo(Company);
 
 const syncModels = async () => {
   const transaction = await sequelize.transaction();
@@ -21,6 +25,7 @@ const syncModels = async () => {
     await Education.sync({ alter: true, force: true });
     await Company.sync({ alter: true, force: true });
     await ApplicantWellbeingValue.sync({ alter: true, force: true });
+    await CompanyWellbeingValues.sync({ alter: true, force: true });
     await transaction.commit();
   } catch (error) {
     await transaction.rollback();
@@ -32,4 +37,4 @@ syncModels().catch(error => {
   console.error('Failed to sync models:', error);
 });
 
-export { Applicant, JobExperience, Education, ApplicantWellbeingValue, Company };
+export { Applicant, JobExperience, Education, ApplicantWellbeingValue, Company, CompanyWellbeingValues };

@@ -28,6 +28,12 @@ export const applicantWellbeingValueSchema = object({
     applicantId: string().required()
 });
 
+export const companyWellbeingValueSchema = object({
+    name: string().required(),
+    weight: number().min(1).max(5).required(),
+    companyId: string().required()
+});
+
 export const CompanySchema = object({
     companyName: string().required(),
     email: string().required(),
