@@ -16,6 +16,21 @@ router.get('/', async (req, res) => {
 });
 
 /**
+ * GET /companies/:id
+ * Returns a single company with the given id.
+ */
+router.get('/:id', async (req, res) => {
+  try {
+    const company = await Company.findByPk(req.params.id, {
+      include: [CompanyWellbeingValues, Employee, SurveyAnswer]
+    });
+    res.json(company);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+/**
  * POST /companies
  * Creates a new company.
  *  Example request body:
