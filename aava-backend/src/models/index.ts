@@ -5,6 +5,7 @@ import Education from "./Education";
 import Company from "./Company";
 import ApplicantWellbeingValue from "./ApplicantWellbeingValues";
 import CompanyWellbeingValues from "./CompanyWellbeingValues";
+import { populateDatabase } from "../utils/utils";
 
 Applicant.hasMany(JobExperience);
 Applicant.hasOne(Education);
@@ -27,6 +28,7 @@ const syncModels = async () => {
     await ApplicantWellbeingValue.sync({ alter: true, force: true });
     await CompanyWellbeingValues.sync({ alter: true, force: true });
     await transaction.commit();
+    await populateDatabase();
   } catch (error) {
     await transaction.rollback();
     throw error;
