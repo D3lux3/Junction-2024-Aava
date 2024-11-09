@@ -15,6 +15,24 @@ export const jobExperienceSchema = object({
     applicantId: string().required(),
 });
 
+export const EducationSchema = object({
+    schoolName: string().required(),
+    educationLevel: number().required(),
+    studyState: string().required(),
+    applicantId: string().required(),
+});
+
+export interface Education {
+    schoolName: string;
+    educationLevel: number;
+    studyState: string;
+    applicantId: string;
+}
+
+export interface EducationWithId extends Education {
+    id: string;
+}
+
 export interface JobExperience {
     companyName: string;
     field: string;

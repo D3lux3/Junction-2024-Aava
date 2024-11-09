@@ -1,6 +1,6 @@
 import express from 'express';
-import { Applicant, JobExperience } from '../models';
-import { applicantSchema, jobExperienceSchema } from '../types';
+import { Applicant, Education, JobExperience } from '../models';
+import { applicantSchema, EducationSchema, jobExperienceSchema } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const applicants = await Applicant.findAll({
-      include: JobExperience
+      include: [JobExperience, Education]
     });
     res.json(applicants);
   } catch (error) {
@@ -64,6 +64,37 @@ router.post('/experience/:id', async (req, res) => {
     const jobExperienceWithId = { ...validatedRequestBody, id: uuidv4() };
     const savedJobExperience = await JobExperience.create(jobExperienceWithId);
     res.status(201).json(savedJobExperience);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+/**
+ * POST /applicants/education/:id
+ * Creates new education for an applicant.
+ *  id is the id of the applicant.
+ * Example request body:
+ * {
+ * "schoolName": "University of Helsinki",
+ * "educationLevel": 5,
+ * "studyState": "Graduated"
+ * }
+ */
+
+router.post('/education/:id', async (req, res) => {
+  try {
+    const applicant = await Applicant.findByPk(req.params.id);
+
+    if (!applicant) {
+      res.status(404).json({ error: 'Applicant not found' });
+      return;
+    }
+
+    const validatedRequestBody = await EducationSchema.validate({ ...req.body, applicantId: applicant.id });
+
+    const EducationWithId = { ...validatedRequestBody, id: uuidv4() };
+    const education = await Education.create(EducationWithId);
+    res.status(201).json(education);
   } catch (error) {
     res.status(500).json({ error: error });
   }
