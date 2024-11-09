@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Walkthrough from './components/Walkthrough'; // Ensure this path is correct
+import SurveyView from './SurveyView/SurveyView';
 
 const AppRouter: React.FC = () => {
   return (
@@ -9,6 +10,7 @@ const AppRouter: React.FC = () => {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/Walkth" element={<Walkthrough />} />
+        <Route path="/survey/:id" element={<SurveyView />} />
       </Routes>
     </Router>
   );

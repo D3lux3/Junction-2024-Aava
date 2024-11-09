@@ -4,9 +4,10 @@ import { connectToDatabase } from './utils/database';
 import applicantRouter from './routers/applicantRouter';
 import companyRouter from './routers/companyRouter';
 import { getCompanyDistances } from './db';
+import cors from 'cors';
 
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 app.use('/applicants', applicantRouter)
 app.use('/companies', companyRouter)
