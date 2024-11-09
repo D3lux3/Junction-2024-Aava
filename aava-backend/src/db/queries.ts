@@ -23,3 +23,24 @@ GROUP BY
 ORDER BY
     distance
 `;
+
+export const GET_COMPANY_JOB_AND_INFO = `
+SELECT
+    c.id AS company_id,
+    c.size,
+    c.industry,
+    c.city AS location,
+    JSON_AGG(
+        JSON_BUILD_OBJECT(
+            'job_name', j.job_name,
+            'job_description', j.job_description
+        )
+    ) AS jobs
+FROM
+    companies c
+LEFT JOIN joblistings j ON c.id = j.company_id
+WHERE
+    c.id = $1
+GROUP BY
+    c.id
+`;
