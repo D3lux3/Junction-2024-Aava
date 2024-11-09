@@ -1,4 +1,4 @@
-import { Applicant, JobExperience, Education, ApplicantWellbeingValue, Company, CompanyWellbeingValues, Employee } from "../models";
+import { Applicant, JobExperience, Education, ApplicantWellbeingValue, Company, CompanyWellbeingValues, Employee, SurveyAnswer } from "../models";
 import { v4 as uuidv4 } from 'uuid';
 
 export const populateDatabase = async () => {
@@ -88,18 +88,58 @@ export const populateDatabase = async () => {
         companyId: company.id
       });
 
-      await Employee.create({
+      const employee1 = await Employee.create({
         id: uuidv4(),
         email: "employee1@example.com",
         companyId: company.id
       });
 
-      await Employee.create({
+      const employee2 = await Employee.create({
         id: uuidv4(),
         email: "employee2@example.com",
         companyId: company.id
       });
-  
+
+      await SurveyAnswer.create({
+        id: uuidv4(),
+        wbName: "Work-Life Balance",
+        answerValue: 4.5,
+        employeeId: employee1.id,
+        companyId: company.id
+      });
+
+      await SurveyAnswer.create({
+        id: uuidv4(),
+        wbName: "Workplace Safety",
+        answerValue: 3.8,
+        employeeId: employee1.id,
+        companyId: company.id
+      });
+
+      await SurveyAnswer.create({
+        id: uuidv4(),
+        wbName: "Mental Health Support",
+        answerValue: 4.2,
+        employeeId: employee1.id,
+        companyId: company.id
+      });
+
+      await SurveyAnswer.create({
+        id: uuidv4(),
+        wbName: "Diversity and Inclusion",
+        answerValue: 5.0,
+        employeeId: employee1.id,
+        companyId: company.id
+      });
+
+      await SurveyAnswer.create({
+        id: uuidv4(),
+        wbName: "Flexible Working Conditions",
+        answerValue: 4.7,
+        employeeId: employee1.id,
+        companyId: company.id
+      });
+
       console.log('Database populated with mock values.');
     } catch (error) {
       console.error('Failed to populate database:', error);
