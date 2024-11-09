@@ -13,7 +13,7 @@ const LoginForm: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-white text-gray-800">
       <div className="flex flex-col items-center mb-8">
         <img src={jobberLogo} className="h-40 md:h-60 mb-4" alt="Jobber logo" />
-        <h1 className="text-2xl md:text-4xl mb-4">Swipe in the future</h1>
+        <h1 className="text-2xl md:text-4xl mb-4">Swipe into your future</h1>
       </div>
       <div className="flex space-x-4">
         <button
