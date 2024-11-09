@@ -28,6 +28,28 @@ export const applicantWellbeingValueSchema = object({
     applicantId: string().required()
 });
 
+export const CompanySchema = object({
+    companyName: string().required(),
+    email: string().required(),
+    bio: string().required(),
+    industry: string().required(),
+    city: string().required(),
+    size: number().min(50).required()
+});
+
+export interface Company {
+    companyName: string;
+    email: string;
+    bio: string;
+    industry: string;
+    city: string;
+    size: number;
+}
+
+export interface CompanyWithId extends Company {
+    id: string;
+}
+
 export interface Education {
     schoolName: string;
     educationLevel: number;

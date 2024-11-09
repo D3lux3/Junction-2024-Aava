@@ -1,6 +1,6 @@
 import express from 'express';
 import { Applicant, Education, JobExperience, ApplicantWellbeingValue } from '../models';
-import { applicantSchema, applicantWellbeingValueSchema, educationSchema, jobExperienceSchema } from '../types';
+import { applicantSchema, applicantWellbeingValueSchema, CompanySchema, educationSchema, jobExperienceSchema } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
