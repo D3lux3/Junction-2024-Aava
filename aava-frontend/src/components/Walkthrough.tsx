@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
+import { Button, Box, Typography, IconButton } from '@mui/material';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 const Walkthrough: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,28 +25,35 @@ const Walkthrough: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-white text-gray-800" {...handlers}>
-      <div className="flex-grow flex items-center justify-center">
-        <h1 className="text-2xl md:text-4xl mb-4">{slides[currentSlide]}</h1>
-      </div>
-      <div className="flex flex-col items-center mb-8 w-full px-4">
-        <div className="flex justify-center space-x-3 mb-6">
+    <Box className="flex flex-col items-center justify-between min-h-screen bg-white text-gray-800" {...handlers}>
+      <Box className="flex-grow flex items-center justify-center">
+        <Typography variant="h5" className="mb-4">
+          {slides[currentSlide]}
+        </Typography>
+      </Box>
+      <Box className="flex flex-col items-center mb-8 w-full px-4">
+        <Box className="flex justify-center space-x-1 mb-6">
           {slides.map((_, index) => (
-            <div
+            <IconButton
               key={index}
-              className={`h-4 w-4 rounded-full ${index === currentSlide ? 'bg-gray-800' : 'bg-gray-400'}`}
               onClick={() => setCurrentSlide(index)}
-            ></div>
+              color={index === currentSlide ? 'primary' : 'default'}
+              sx={{ padding: '4px' }} // Adjust padding to make the dots closer
+            >
+              <FiberManualRecordIcon fontSize="small" sx={{ fontSize: '12px' }} /> {/* Adjust fontSize to make the dots smaller */}
+            </IconButton>
           ))}
-        </div>
-        <button
+        </Box>
+        <Button
           onClick={handleNext}
-          className="w-full max-w-md p-4 bg-white text-black border border-black rounded hover:bg-gray-200"
+          variant="contained"
+          color="white"
+          className="w-full max-w-md"
         >
           Next
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

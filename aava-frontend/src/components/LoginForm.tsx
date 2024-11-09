@@ -1,6 +1,7 @@
 import React from 'react';
 import jobberLogo from '../assets/jobberlogo.svg';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, Typography, TextField } from '@mui/material';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
@@ -10,26 +11,30 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-gray-800">
-      <div className="flex flex-col items-center mb-8">
+    <Box className="flex flex-col items-center justify-center min-h-screen bg-white text-gray-800">
+      <Box className="flex flex-col items-center mb-8">
         <img src={jobberLogo} className="h-40 md:h-60 mb-4" alt="Jobber logo" />
-        <h1 className="text-2xl md:text-4xl mb-4">Swipe into your future</h1>
-      </div>
-      <div className="flex space-x-4">
-        <button
+        <Typography variant="h6" className="mb-4">Swipe into your future</Typography>
+      </Box>
+      <Box className="flex space-x-4">
+        <Button
           onClick={handleNavigation}
-          className="w-40 p-2 bg-gray-500 text-white rounded hover:bg-gray-700"
+          variant="contained"
+          sx={{ backgroundColor: '#4a4a4a', '&:hover': { backgroundColor: '#333' } }}
+          className="w-40"
         >
           Register
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={handleNavigation}
-          className="w-40 p-2 bg-white text-black border border-black rounded hover:bg-gray-200"
+          variant="outlined"
+          color="white"
+          className="w-40"
         >
           Login
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
