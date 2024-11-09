@@ -46,7 +46,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const validatedRequestBody = await companySchema.validate(req.body);
-    const CompanyWithId = { ...validatedRequestBody, id: uuidv4() };
+    const CompanyWithId = { ...validatedRequestBody, id: uuidv4(), size: String(validatedRequestBody.size) };
     const company = await Company.create(CompanyWithId);
     res.status(201).json(company);
   } catch (error) {

@@ -37,13 +37,71 @@ const CompanyForm: React.FC = () => {
     return Object.values(tempErrors).every(x => x === '');
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const getRandomFloat = () => (Math.random() * 4 + 1).toFixed(2);
+
+  const wellbeingTitles = [
+    'Work-Life Balance',
+    'Mental Health Support',
+    'Flexible Working Conditions and Workplace Culture',
+    'Career and Skill Development',
+    'Diversity and Inclusion'
+  ];
+
+  const populateWellbeingValues = async (companyId: string) => {
+    const wellbeingValues = wellbeingTitles.map(title => ({
+      name: title,
+      weight: parseFloat(getRandomFloat()), // Convert to float
+    }));
+    try {
+      for (const value of wellbeingValues) {
+        const response = await fetch(`http://localhost:1337/companies/wellbeing/${companyId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(value),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error creating wellbeing value: ${response.statusText} - ${errorText}`);
+        }
+
+        console.log('Wellbeing value created successfully:', value);
+      }
+    } catch (error) {
+      console.error('Error creating wellbeing values:', error);
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (validate()) {
       const companyData = { companyName, email, bio, industry, city, size };
       console.log('Company Data:', companyData);
-      // Handle form submission, e.g., send data to backend
-      navigate('/demo-info');
+      try {
+        const response = await fetch('http://localhost:1337/companies', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(companyData),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error creating company: ${response.statusText} - ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log('Company created successfully:', data);
+        populateWellbeingValues(data.id);
+
+        // Navigate to the next page
+        navigate('/demo-info');
+      } catch (error) {
+        console.error('Error creating company:', error);
+      }
     }
   };
 

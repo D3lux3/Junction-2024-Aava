@@ -40,7 +40,7 @@ export const companySchema = object({
     bio: string().required(),
     industry: string().required(),
     city: string().required(),
-    size: number().min(50).required()
+    size: string().required()
 });
 
 export const employeeSchema = object({
@@ -62,6 +62,18 @@ export const surveyAnswerRequestSchema = object({
     surveyAnswers: array(surveyAnswerSchema)
 });
 
+export const jobListingSchema = object({
+    jobName: string().required(),
+    jobDescription: string().required(),
+    companyId: string().required()
+});
+
+export interface JobListing {
+    jobName: string;
+    jobDescription: string;
+    companyId: string;
+}
+
 export interface SurveyAnswer {
     wbName: string;
     answerValue: number;
@@ -75,7 +87,7 @@ export interface Company {
     bio: string;
     industry: string;
     city: string;
-    size: number;
+    size: string;
 }
 
 export interface CompanyWithId extends Company {

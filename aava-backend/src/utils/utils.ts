@@ -50,7 +50,7 @@ export const populateDatabase = async () => {
         bio: "A software company that develops innovative programs.",
         industry: "Software Development",
         city: "Helsinki",
-        size: 100
+        size: "500+"
       });
 
       await CompanyWellbeingValues.create({

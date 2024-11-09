@@ -8,7 +8,7 @@ class Company extends Model<InferAttributes<Company>, InferCreationAttributes<Co
     declare bio: string;
     declare industry: string;
     declare city: string;
-    declare size: number;
+    declare size: string;
 }
 
 Company.init({
@@ -39,10 +39,10 @@ Company.init({
         allowNull: false
     },
     size: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
     }
-    
+
 }, {
     sequelize,
     modelName: 'company',
