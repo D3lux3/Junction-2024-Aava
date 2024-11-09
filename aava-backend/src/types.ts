@@ -34,13 +34,18 @@ export const companyWellbeingValueSchema = object({
     companyId: string().required()
 });
 
-export const CompanySchema = object({
+export const companySchema = object({
     companyName: string().required(),
     email: string().required(),
     bio: string().required(),
     industry: string().required(),
     city: string().required(),
     size: number().min(50).required()
+});
+
+export const employeeSchema = object({
+    email: string().email().required(),
+    companyId: string().required()
 });
 
 export interface Company {

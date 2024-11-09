@@ -1,4 +1,4 @@
-import { Applicant, JobExperience, Education, ApplicantWellbeingValue, Company, CompanyWellbeingValues } from "../models";
+import { Applicant, JobExperience, Education, ApplicantWellbeingValue, Company, CompanyWellbeingValues, Employee } from "../models";
 import { v4 as uuidv4 } from 'uuid';
 
 export const populateDatabase = async () => {
@@ -85,6 +85,18 @@ export const populateDatabase = async () => {
         id: uuidv4(),
         name: "Flexible Working Conditions",
         weight: 4,
+        companyId: company.id
+      });
+
+      await Employee.create({
+        id: uuidv4(),
+        email: "employee1@example.com",
+        companyId: company.id
+      });
+
+      await Employee.create({
+        id: uuidv4(),
+        email: "employee2@example.com",
         companyId: company.id
       });
   
