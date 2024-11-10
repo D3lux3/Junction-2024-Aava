@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Card, CardContent, Divider } from '@mui/material';
+import RadarPlot from './RadarPlot';
+import ValueMatch from './ValueMatch';
 
 const CompanyCardView: React.FC = () => {
   const companies = [
@@ -11,6 +13,9 @@ const CompanyCardView: React.FC = () => {
   ];
 
   const [currentIndex] = useState(0);
+
+  const data1 = [5,4,4,2,1];
+  const data2 = [1,1,1,4,4];
 
 
   console.log('Rendering CompanyCardView with companies:', companies);
@@ -55,9 +60,11 @@ const CompanyCardView: React.FC = () => {
               </Box>
             </Box>
             <Typography variant="body1">{companies[currentIndex].info}</Typography>
+            <Divider sx={{ width: '100%', mt: 2, borderColor: 'grey.800', borderWidth: 0.2 }} />
+            <RadarPlot data1={data1} data2={data2}/>
+            <ValueMatch />
           </CardContent>
         </Card>
-        <Divider sx={{ width: '100%', mt: 2, borderColor: 'grey.800', borderWidth: 0.2 }} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}></Box>
       </Box>
     </Box>

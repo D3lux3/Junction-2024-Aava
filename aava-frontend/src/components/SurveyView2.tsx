@@ -43,8 +43,7 @@ const SurveyView2: React.FC<SurveyViewProps> = ({ titles, questions, onFinish })
             key={index}
             question={question}
             onChange={handleSliderChange(currentPage, index)}
-            initialValue={values[currentPage][index]}
-          />
+            initialValue={values[currentPage][index]} title={''}          />
         ))}
       </Box>
       <Box className="w-full flex justify-between mt-8">
