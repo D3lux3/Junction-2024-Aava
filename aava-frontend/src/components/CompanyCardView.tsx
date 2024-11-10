@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Typography, Card, CardContent, Divider } from '@mui/material';
+import { Box, Typography, Card, CardContent, Divider, Button, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import RadarPlot from './RadarPlot';
 import ValueMatch from './ValueMatch';
+import MatchedBest from './MatchedBest';
+import BiggestDifference from './BiggestDifference';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import FolderIcon from '@mui/icons-material/Folder';
 
 const CompanyCardView: React.FC = () => {
   const companies = [
@@ -12,8 +18,8 @@ const CompanyCardView: React.FC = () => {
     // Add more companies as needed
   ];
 
-  const [currentIndex] = useState(0);
-
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [value, setValue] = useState(0);
   const data1 = [5,4,4,2,1];
   const data2 = [1,1,1,4,4];
 
@@ -39,7 +45,7 @@ const CompanyCardView: React.FC = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          height: '80vh', // Adjust the height as needed
+          height: 'auto', // Adjust the height as needed
         }}
       >
         <Card
@@ -49,7 +55,7 @@ const CompanyCardView: React.FC = () => {
             backgroundColor: 'white', // Set background color to white
             boxShadow: 'none', // Remove shadow
             padding: 2, // Add padding
-            margin: 1, // Add margin
+            margin: 0, // Add margin
           }}
         >
           <CardContent>
@@ -63,10 +69,29 @@ const CompanyCardView: React.FC = () => {
             <Divider sx={{ width: '100%', mt: 2, borderColor: 'grey.800', borderWidth: 0.2 }} />
             <RadarPlot data1={data1} data2={data2}/>
             <ValueMatch />
+            <MatchedBest />
+            <BiggestDifference />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 0 }}>
+                <Button variant="contained" color="inherit" sx={{ mt: 1 }}>View Company</Button>
+                <Button variant="outlined" color="inherit" sx={{ mt: 1 }}>Save Company</Button>
+            </Box>
           </CardContent>
         </Card>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}></Box>
       </Box>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        sx={{ width: '100%', position: 'fixed', bottom: 0 }}
+      >
+        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+        <BottomNavigationAction label="Folder" icon={<FolderIcon />} />
+      </BottomNavigation>
     </Box>
   );
 };
