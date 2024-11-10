@@ -88,6 +88,7 @@ const createApplicant = async () => {
   }
 
   const applicantData = await applicantResponse.json();
+  localStorage.removeItem('applicantId'); // Remove existing applicantId from local storage
   localStorage.setItem('applicantId', applicantData.id); // Save applicantId to local storage
   return applicantData.id;
 };

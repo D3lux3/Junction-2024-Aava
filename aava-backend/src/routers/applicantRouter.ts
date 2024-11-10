@@ -127,7 +127,6 @@ router.get('/companydistance/:id', async (req, res) => {
       res.status(404).json({ error: 'Applicant not found' });
       return;
     }
-
     const companyDistances = await getCompanyDistances(applicant.id);
     res.json(companyDistances);
   } catch (error) {
