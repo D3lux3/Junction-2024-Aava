@@ -1,4 +1,4 @@
-# Aava Backend
+# Aava Backend (Mostly similar workflow on frontend)
 
 ## Overview
 
