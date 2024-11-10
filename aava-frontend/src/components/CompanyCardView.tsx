@@ -31,7 +31,7 @@ const CompanyCardView: React.FC = () => {
     if (userId) {
       const fetchCompanyDistances = async () => {
         try {
-          const response = await fetch(`http://localhost:1337//companydistance/${userId}`);
+          const response = await fetch(`http://localhost:1337/companydistance/${userId}`);
           const data = await response.json();
           setCompanyDistances(data);
         } catch (error) {
@@ -41,7 +41,7 @@ const CompanyCardView: React.FC = () => {
 
     const fetchCompanyJobInfo = async () => {
       try {
-        const response = await fetch(`http://localhost:1337//companyjobinfo/${userId}`);
+        const response = await fetch(`http://localhost:1337/companyjobinfo/${userId}`);
         const data = await response.json();
         setCompanyJobInfo(data);
       } catch (error) {
@@ -57,6 +57,7 @@ const CompanyCardView: React.FC = () => {
 
 
   console.log('Rendering CompanyCardView with companies:', companies);
+  // lets print out the company distances and job info json objects
   console.log(companyDistances);
   console.log(companyJobInfo);
 
