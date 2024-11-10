@@ -1,6 +1,7 @@
 import express from 'express';
-import { Applicant, Education, JobExperience, ApplicantWellbeingValue } from '../models';
+import { Applicant, Education, JobExperience, ApplicantWellbeingValue, Company } from '../models';
 import { applicantSchema, applicantWellbeingValueSchema, educationSchema, jobExperienceSchema } from '../types';
+import { getCompanyDistances, getCompanyJobAndInfo } from '../db';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
@@ -117,5 +118,39 @@ router.post('/wellbeing/:id', async (req, res) => {
     res.status(500).json({ error: error });
   }
 });
+
+router.get('/companydistance/:id', async (req, res) => {
+  try {
+    const applicant = await Applicant.findByPk(req.params.id);
+
+    if (!applicant) {
+      res.status(404).json({ error: 'Applicant not found' });
+      return;
+    }
+
+    const companyDistances = await getCompanyDistances(applicant.id);
+    res.json(companyDistances);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+router.get('/companyjobinfo/:id', async (req, res) => {
+  try {
+    const company = await Company.findByPk(req.params.id);
+
+    if (!company) {
+      res.status(404).json({ error: 'Applicant not found' });
+      return;
+    }
+
+    const companyJobAndInfo = await getCompanyJobAndInfo(company.id);
+    res.json(companyJobAndInfo);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+}
+);
+
 
 export default router;
