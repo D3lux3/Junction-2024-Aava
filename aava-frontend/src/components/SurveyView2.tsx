@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import SliderComponent from './SliderComponent';
+import { useNavigate } from 'react-router-dom';
+import { handleFinish } from '../Router';
 
 interface SurveyViewProps {
   titles: string[];
   questions: string[][];
-  onFinish: (values: number[][]) => void;
 }
 
-const SurveyView2: React.FC<SurveyViewProps> = ({ titles, questions, onFinish }) => {
+const SurveyView2: React.FC<SurveyViewProps> = ({ titles, questions }) => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const [values, setValues] = useState<number[][]>(questions.map(() => Array(3).fill(3)));
 
@@ -22,7 +24,7 @@ const SurveyView2: React.FC<SurveyViewProps> = ({ titles, questions, onFinish })
     if (currentPage < titles.length - 1) {
       setCurrentPage(currentPage + 1);
     } else {
-      onFinish(values);
+      handleFinish(values, navigate);
     }
   };
 

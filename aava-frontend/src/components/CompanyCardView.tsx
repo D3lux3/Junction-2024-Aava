@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Card, CardContent, Divider, Button, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import RadarPlot from './RadarPlot';
 import ValueMatch from './ValueMatch';
@@ -8,6 +8,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import FolderIcon from '@mui/icons-material/Folder';
+
 
 const CompanyCardView: React.FC = () => {
   const companies = [
@@ -20,11 +21,44 @@ const CompanyCardView: React.FC = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [value, setValue] = useState(0);
+  const [companyDistances, setCompanyDistances] = useState([]);
+  const [companyJobInfo, setCompanyJobInfo] = useState([]);
+  const [userId, setUserId] = useState<string | null>(localStorage.getItem('applicantId'));
   const data1 = [5,4,4,2,1];
   const data2 = [1,1,1,4,4];
 
+  useEffect(() => {
+    if (userId) {
+      const fetchCompanyDistances = async () => {
+        try {
+          const response = await fetch(`http://localhost:1337//companydistance/${userId}`);
+          const data = await response.json();
+          setCompanyDistances(data);
+        } catch (error) {
+          console.error('Error fetching company distances:', error);
+        }
+    }
+
+    const fetchCompanyJobInfo = async () => {
+      try {
+        const response = await fetch(`http://localhost:1337//companyjobinfo/${userId}`);
+        const data = await response.json();
+        setCompanyJobInfo(data);
+      } catch (error) {
+        console.error('Error fetching company job info:', error);
+      }
+    };
+
+    fetchCompanyDistances();
+    fetchCompanyJobInfo();
+  }
+  }, [userId]);
+
+
 
   console.log('Rendering CompanyCardView with companies:', companies);
+  console.log(companyDistances);
+  console.log(companyJobInfo);
 
   return (
     <Box

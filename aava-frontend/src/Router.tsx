@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import App from './App';
 import Walkthrough from './components/Walkthrough';
 import SurveyView from './SurveyView/SurveyView';
@@ -23,7 +24,7 @@ const surveyQuestions = [
   ['Question 5.1', 'Question 5.2', 'Question 5.3']
 ];
 
-const updateWellbeingValues = async (applicantId: string, averages: number[]) => {
+const updateWellbeingValues = async (applicantId: string, averages: number[], navigate: (path: string) => void) => {
   try {
     const wellbeingValues = surveyTitles.map((title, index) => ({
       name: title,
@@ -47,19 +48,22 @@ const updateWellbeingValues = async (applicantId: string, averages: number[]) =>
 
       console.log('Applicant wellbeing value updated successfully:', value);
     }
+    // Navigate to the next view after updating wellbeing values
+    navigate('/companycardview'); // Replace '/next-view' with the actual route
+
   } catch (error) {
     console.error('Error updating wellbeing values:', error);
   }
 };
 
-const handleFinish = async (values: number[][]): Promise<void> => {
+export const handleFinish = async (values: number[][], navigate: (path: string) => void): Promise<void> => {
   const averages = values.map(pageValues => pageValues.reduce((a, b) => a + b, 0) / pageValues.length);
   console.log('Averages:', averages);
 
   try {
     const applicantId = await createApplicant();
     console.log('Applicant created successfully:', applicantId);
-    await updateWellbeingValues(applicantId, averages);
+    await updateWellbeingValues(applicantId, averages, navigate);
   } catch (error) {
     console.error('Error:', error);
   }
@@ -84,6 +88,7 @@ const createApplicant = async () => {
   }
 
   const applicantData = await applicantResponse.json();
+  localStorage.setItem('applicantId', applicantData.id); // Save applicantId to local storage
   return applicantData.id;
 };
 
