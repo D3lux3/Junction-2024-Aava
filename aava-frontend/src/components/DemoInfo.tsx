@@ -13,7 +13,7 @@ const DemoInfo: React.FC = () => {
       setLoading(false);
       // Navigate to the next view or handle the mock profile generation
       console.log('Mock profile generated');
-      navigate('/mock-profile'); // Replace with the actual route if needed
+      navigate('/companycardview'); // Replace with the actual route if needed
     }, 3000); // Simulate loading time
   };
 
